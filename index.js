@@ -1,20 +1,19 @@
 const express = require("express");
 
-const blogRouter = require("./blog/router.js");
+const users = require("./data/db");
+
+const usersRouter = require("./users/users-router");
+const welcomeRouter = require("./welcome/welcome-router");
 
 const server = express();
+const port = 4000;
 
 server.use(express.json());
+server.use("/users", usersRouter);
+server.use("/", welcomeRouter);
 
-server.use("/api/blog", blogRouter);
-
-server.get("/", (req, res) => {
-    res.send(`
-        <h2>Blog data as below</h2>
-        <p>Welcome to the Blog</p>
-    `);
-});
 
 server.listen(4000, () => {
-    console.log("\n Server Running on http://localhost:4000 ***\n");
+    console.log(`\n Server Running on http://localhost:${port} ***\n`);
 })
+
