@@ -36,7 +36,7 @@ router.post('/posts', (req, res) => {
     })
   }
 
-  data.add(req.body)
+  data.insert(req.body)//come back and look at it again
   .then(data => {
     res.status(201).json(data);
   })
@@ -51,6 +51,7 @@ router.post('/posts', (req, res) => {
 
 //When the client makes a POST request to /posts/:id/comments: 
 router.post('/posts/:id/comments', (req, res) => {
+  const postId = req.params.id
   if (!req.body.text) {
     return res.status(400).json({
       errorMessage: "Please provide text for the comment."
@@ -63,7 +64,7 @@ router.post('/posts/:id/comments', (req, res) => {
         message: "The post with the specified ID does not exist." 
       });
     } else {
-      data.insertComment(req.body)
+      data.insertComment({...req.body, post_id: postId})//come back and llok at it again
       .then((r) => {
         data.findCommentById(r.id).then(comment => {
           res.status(201).json(comment[0]);

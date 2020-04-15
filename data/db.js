@@ -5,7 +5,7 @@ const db = knex(knexConfig.development);
 module.exports = {
   find,
   findById,
-  insert,
+  insert,//add
   update,
   remove,
   findPostComments,
